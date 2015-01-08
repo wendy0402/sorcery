@@ -25,13 +25,13 @@ module Sorcery
         module InstanceMethods
           # This method sets the cookie and calls the user to save the token and the expiration to db.
           def remember_me!
-            current_user.remember_me!
-            set_remember_me_cookie!(current_user)
+            current_sorcerer.remember_me!
+            set_remember_me_cookie!(current_sorcerer)
           end
 
           # Clears the cookie and clears the token from the db.
           def forget_me!
-            current_user.forget_me!
+            current_sorcerer.forget_me!
             cookies.delete(:remember_me_token, :domain => Config.cookie_domain)
           end
 
@@ -39,7 +39,7 @@ module Sorcery
           # logins a user instance, and optionally remembers him.
           def auto_login(user, should_remember = false)
             session[:user_id] = user.id.to_s
-            @current_user = user
+            @current_sorcerer = user
             remember_me! if should_remember
           end
 
@@ -53,15 +53,15 @@ module Sorcery
 
           # Checks the cookie for a remember me token, tried to find a user with that token
           # and logs the user in if found.
-          # Runs as a login source. See 'current_user' method for how it is used.
+          # Runs as a login source. See 'current_sorcerer' method for how it is used.
           def login_from_cookie
             user = cookies.signed[:remember_me_token] && user_class.sorcery_adapter.find_by_remember_me_token(cookies.signed[:remember_me_token])
             if user && user.has_remember_me_token?
               set_remember_me_cookie!(user)
               session[:user_id] = user.id.to_s
-              @current_user = user
+              @current_sorcerer = user
             else
-              @current_user = false
+              @current_sorcerer = false
             end
           end
 

@@ -9,7 +9,7 @@ module Sorcery
     
     initializer "extend Controller with sorcery" do |app|
       ActionController::Base.send(:include, Sorcery::Controller)
-      ActionController::Base.helper_method :current_user
+      ActionController::Base.helper_method :current_sorcerer
       ActionController::Base.helper_method :logged_in?
     end
     

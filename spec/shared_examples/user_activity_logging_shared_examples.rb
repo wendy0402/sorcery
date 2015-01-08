@@ -29,20 +29,20 @@ shared_examples_for "rails_3_activity_logging_model" do
       expect(User.sorcery_config.last_login_from_ip_address_name).to eq :ip_address
     end
 
-    describe ".current_users" do
+    describe ".current_sorcerers" do
       let(:user) { create_new_user }
 
       it "is empty when no users are logged in" do
-        expect(User.current_users).to be_empty
+        expect(User.current_sorcerers).to be_empty
       end
 
       it "holds the user object when 1 user is logged in" do
         user.set_last_activity_at(Time.now.in_time_zone)
 
-        expect(User.current_users).to match([User.sorcery_adapter.find(user.id)])
+        expect(User.current_sorcerers).to match([User.sorcery_adapter.find(user.id)])
       end
 
-      it "'current_users' shows all current_users, whether they have logged out before or not." do
+      it "'current_sorcerers' shows all current_sorcerers, whether they have logged out before or not." do
         User.sorcery_adapter.delete_all
         user1 = create_new_user({:username => 'gizmo1', :email => "bla1@bla.com", :password => 'secret1'})
         user2 = create_new_user({:username => 'gizmo2', :email => "bla2@bla.com", :password => 'secret2'})
@@ -54,10 +54,10 @@ shared_examples_for "rails_3_activity_logging_model" do
           user.set_last_activity_at(now)
         end
 
-        expect(User.current_users.map(&:id)).to match_array([user1, user2, user3].map(&:id))
+        expect(User.current_sorcerers.map(&:id)).to match_array([user1, user2, user3].map(&:id))
         Timecop.travel now + 5
         user1.set_last_logout_at(Time.now.in_time_zone)
-        expect(User.current_users.map(&:id)).to match_array([user2, user3].map(&:id))
+        expect(User.current_sorcerers.map(&:id)).to match_array([user2, user3].map(&:id))
         Timecop.return
       end
 

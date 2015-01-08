@@ -46,7 +46,7 @@ describe SorceryController do
 
     specify { should respond_to(:logged_in?) }
 
-    specify { should respond_to(:current_user) }
+    specify { should respond_to(:current_sorcerer) }
 
     it "login(username,password) returns the user when success and set the session with user.id" do
       expect(User).to receive(:authenticate).with('bla@bla.com', 'secret').and_return(user)
@@ -140,18 +140,18 @@ describe SorceryController do
       expect(subject.logged_in?).to be false
     end
 
-    it "current_user returns the user instance if logged in" do
+    it "current_sorcerer returns the user instance if logged in" do
       session[:user_id] = user.id.to_s
       expect(User.sorcery_adapter).to receive(:find_by_id).with("42") { user }
 
-      2.times { expect(subject.current_user).to eq user } # memoized!
+      2.times { expect(subject.current_sorcerer).to eq user } # memoized!
     end
 
-    it "current_user returns false if not logged in" do
+    it "current_sorcerer returns false if not logged in" do
       session[:user_id] = nil
       expect(User.sorcery_adapter).to_not receive(:find_by_id)
 
-      2.times { expect(subject.current_user).to be_nil } # memoized!
+      2.times { expect(subject.current_sorcerer).to be_nil } # memoized!
     end
 
     specify { should respond_to(:require_login) }
@@ -198,11 +198,11 @@ describe SorceryController do
       expect(subject.logged_in?).to be true
     end
 
-    it "auto_login(user) works even if current_user was already set to false" do
+    it "auto_login(user) works even if current_sorcerer was already set to false" do
       get :test_logout
 
       expect(session[:user_id]).to be_nil
-      expect(subject.current_user).to be_nil
+      expect(subject.current_sorcerer).to be_nil
 
       expect(User).to receive(:first) { user }
 

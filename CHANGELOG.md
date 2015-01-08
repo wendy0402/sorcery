@@ -16,7 +16,7 @@
 * `find_by_provider_and_uid` method was replaced with `find_by_oauth_credentials`
 * Sorcery::VERSION constant was added to allow easy version check
 * `@user.setup_activation` method was made to be public (thanks @iTakeshi)
-* `current_users` method is deprecated
+* `current_sorcerers` method is deprecated
 * Fetching email from VK auth, thanks to @makaroni4
 * Add logged_in? method to test_helpers (thanks to @oriolbcn)
 * #locked? method is now public API (thanks @rogercampos)
@@ -24,7 +24,7 @@
 
 ## 0.8.6
 
-* `current_user` returns `nil` instead of `false` if there's no user loggd in (#493)
+* `current_sorcerer` returns `nil` instead of `false` if there's no user loggd in (#493)
 * MongoMapper adapter does not override `save!` method anymore. However due to ORM's lack of support for `validate: false` in `save!`, the combination of `validate: false` and `raise_on_failure: true` is not possible in MongoMapper. The errors will not be raised in this situation. (#151)
 * Fixed rename warnings for bcrypt-ruby
 * The way Sorcery adapters are included has been changed due to problem with multiple `included` blocks error in `ActiveSupport::Concern` class (#527)

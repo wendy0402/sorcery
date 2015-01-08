@@ -20,7 +20,7 @@ describe SorceryController do
       sorcery_reload!([:activity_logging])
     end
 
-    specify { expect(subject).to respond_to(:current_users) }
+    specify { expect(subject).to respond_to(:current_sorcerers) }
 
     before(:each) do
       allow(user).to receive(:username)
@@ -33,10 +33,10 @@ describe SorceryController do
       sorcery_controller_property_set(:register_last_activity_time, false)
     end
 
-    it "'current_users' should proxy to User.current_users" do
-      expect(User).to receive(:current_users).with(no_args)
+    it "'current_sorcerers' should proxy to User.current_sorcerers" do
+      expect(User).to receive(:current_sorcerers).with(no_args)
 
-      subject.current_users
+      subject.current_sorcerers
     end
 
 

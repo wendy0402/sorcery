@@ -39,10 +39,10 @@ module Sorcery
 
         module InstanceMethods
           # Returns an array of the active users.
-          def current_users
-            ActiveSupport::Deprecation.warn("Sorcery: `current_users` method is deprecated. Read more on Github: https://github.com/NoamB/sorcery/issues/602")
+          def current_sorcerers
+            ActiveSupport::Deprecation.warn("Sorcery: `current_sorcerers` method is deprecated. Read more on Github: https://github.com/NoamB/sorcery/issues/602")
 
-            user_class.current_users
+            user_class.current_sorcerers
           end
 
           protected
@@ -66,14 +66,14 @@ module Sorcery
           def register_last_activity_time_to_db
             return unless Config.register_last_activity_time
             return unless logged_in?
-            current_user.set_last_activity_at(Time.now.in_time_zone)
+            current_sorcerer.set_last_activity_at(Time.now.in_time_zone)
           end
 
           # Updates IP address on every login.
           # This runs as a hook just after a successful login.
           def register_last_ip_address(user, credentials)
             return unless Config.register_last_ip_address
-            current_user.set_last_ip_addess(request.remote_ip)
+            current_sorcerer.set_last_ip_addess(request.remote_ip)
           end
         end
       end

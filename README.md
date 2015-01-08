@@ -55,7 +55,7 @@ login(email, password, remember_me = false)
 auto_login(user)# login without credentials
 logout
 logged_in?      # available to view
-current_user    # available to view
+current_sorcerer    # available to view
 redirect_back_or_to # used when a user tries to access a page while logged out, is asked to login, and we want to return him back to the page he originally wanted.
 @user.external? # external users, such as facebook/twitter etc.
 User.authenticates_with_sorcery!

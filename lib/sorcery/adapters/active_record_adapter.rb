@@ -100,7 +100,7 @@ module Sorcery
           @klass.where(@klass.sorcery_config.email_attribute_name => email).first
         end
 
-        def get_current_users
+        def get_current_sorcerers
           config = @klass.sorcery_config
 
           @klass
